@@ -49,19 +49,29 @@
             type="button"
           ></button>
           <h3 class="popup__title">Editar perfil</h3>
-          <form class="popup__form" id="edit-profile-form">
+          <form class="popup__form" id="edit-profile-form" novalidate>
             <input
               class="popup__input popup__input_type_name"
+              id="name"
               name="name"
               placeholder="Nombre"
               type="text"
+              required
+              minlength="2"
+              maxlength="40"
             />
+            <span class="popup__form__input-error name-error"></span>
             <input
               class="popup__input popup__input_type_description"
+              id="description"
               name="description"
               placeholder="Acerca de mí"
               type="text"
+              minlength="2"
+              maxlength="200"
+              required
             />
+            <span class="popup__form__input-error description-error"></span>
             <button class="button popup__button" type="submit">Guardar</button>
           </form>
         </div>
@@ -74,21 +84,27 @@
             type="button"
           ></button>
           <h3 class="popup__title">Nuevo lugar</h3>
-          <form class="popup__form" id="new-card-form">
+          <form class="popup__form" id="new-card-form" novalidate>
             <input
               class="popup__input popup__input_type_card-name"
               name="place-name"
+              id="place_name"
               placeholder="Título"
-              required
+              minlength="2"
+              maxlength="30"
               type="text"
+              required
             />
+            <span class="popup__form__input-error place_name-error"></span>
             <input
               class="popup__input popup__input_type_url"
               name="link"
+              id="link"
               placeholder="Enlace a la imagen"
-              required
               type="url"
+              required
             />
+            <span class="popup__form__input-error link-error"></span>
             <button class="button popup__button" type="submit">Crear</button>
           </form>
         </div>

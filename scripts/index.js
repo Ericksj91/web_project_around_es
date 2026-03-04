@@ -1,4 +1,4 @@
-//Array de Tarjetas
+//Array de objetos de las Tarjetas
 const initialCards = [
   {
     name: "Valle de Yosemite",
@@ -58,9 +58,21 @@ const cardTemplate = document
   .content.querySelector(".card");
 const cardList = document.querySelector(".cards__list");
 
+//variables bloqueo editar perfil
+const form = document.querySelector("#edit-profile-form");
+const inputs = form.querySelectorAll(".popup__input");
+const popupSend = form.querySelector(".popup__button");
+
+//variables bloqueo nuevo lugar
+const formPlace = document.querySelector("#new-card-form");
+const inputsPlace = formPlace.querySelectorAll(".popup__input");
+const popupSendPlace = formPlace.querySelector(".popup__button");
+
 //funciones
 function openModal(popup) {
   popup.classList.add("popup_is-opened");
+  resetValidation(popup);
+  closeWindows(popup);
 }
 function closeModal(popup) {
   popup.classList.remove("popup_is-opened");
@@ -96,10 +108,7 @@ function handleCardFormSubmit(e) {
   e.target.reset();
 }
 
-function getCardElement(
-  name = "Sin titulo",
-  link = "./images/placeholder.jpg",
-) {
+function getCardElement(name, link) {
   const cardElement = cardTemplate.cloneNode(true);
   const titleElement = cardElement.querySelector(".card__title");
   const imageElement = cardElement.querySelector(".card__image");
@@ -136,6 +145,84 @@ initialCards.forEach(function (initialCard) {
   renderCard(initialCard.name, initialCard.link, cardList);
 });
 
+//funciones para bloqueo de campos
+const showInputError = (formElement, inputElement, errorMessage) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.add("popup__input_type_error");
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add("popup__form__input-error_active");
+};
+
+const hideInputError = (formElement, inputElement) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.remove("popup__input_type_error");
+  errorElement.textContent = "";
+  errorElement.classList.remove("popup__form__input-error_active");
+};
+
+function toggleButtonState(inputList, buttonElement) {
+  const allValid = Array.from(inputList).every((input) => input.validity.valid);
+  buttonElement.disabled = !allValid;
+}
+
+function enableValidation(formElement, inputList, buttonElement) {
+  inputList.forEach((input) => {
+    input.addEventListener("input", () => {
+      if (!input.validity.valid) {
+        showInputError(formElement, input, input.validationMessage);
+      } else {
+        hideInputError(formElement, input);
+      }
+      toggleButtonState(inputList, buttonElement);
+    });
+  });
+
+  formElement.addEventListener("submit", (e) => {
+    let formValid = true;
+    inputList.forEach((input) => {
+      if (!input.validity.valid) {
+        showInputError(formElement, input, input.validationMessage);
+        formValid = false;
+      }
+    });
+    if (!formValid) {
+      e.preventDefault();
+    }
+  });
+  toggleButtonState(inputList, buttonElement);
+}
+
+enableValidation(form, inputs, popupSend);
+enableValidation(formPlace, inputsPlace, popupSendPlace);
+
+function resetValidation(popup) {
+  const errorsSpan = popup.querySelectorAll(".popup__form__input-error");
+  errorsSpan.forEach((errorSpan) => {
+    errorSpan.textContent = "";
+  });
+  const formulario = popup.querySelector(".popup__form");
+  formulario.reset();
+  const buttonDisabled = popup.querySelector(".popup__button");
+  buttonDisabled.disabled = true;
+}
+
+function closeWindows(popup) {
+  popup.addEventListener("click", (e) => {
+    if (e.target === popup) {
+      closeModal(popup);
+    }
+  });
+}
+
+function keyCloseWindow(e) {
+  if (e.key === "Escape") {
+    const openPopup = document.querySelector(".popup_is-opened");
+    if (openPopup) {
+      closeModal(openPopup);
+    }
+  }
+}
+
 //addeventListeners
 editProfile.addEventListener("click", handleOpenEditModal);
 popupClose.addEventListener("click", (e) => {
@@ -158,3 +245,5 @@ closePopup.addEventListener("click", (e) => {
 formElement.addEventListener("submit", handleProfileFormSubmit);
 
 newPlace.addEventListener("submit", handleCardFormSubmit);
+
+document.addEventListener("keydown", keyCloseWindow);
