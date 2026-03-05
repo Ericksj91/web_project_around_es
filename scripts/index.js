@@ -58,12 +58,12 @@ const cardTemplate = document
   .content.querySelector(".card");
 const cardList = document.querySelector(".cards__list");
 
-//variables bloqueo editar perfil
+//variables validación editar perfil
 const form = document.querySelector("#edit-profile-form");
 const inputs = form.querySelectorAll(".popup__input");
 const popupSend = form.querySelector(".popup__button");
 
-//variables bloqueo nuevo lugar
+//variables validación nuevo lugar
 const formPlace = document.querySelector("#new-card-form");
 const inputsPlace = formPlace.querySelectorAll(".popup__input");
 const popupSendPlace = formPlace.querySelector(".popup__button");
@@ -145,7 +145,7 @@ initialCards.forEach(function (initialCard) {
   renderCard(initialCard.name, initialCard.link, cardList);
 });
 
-//funciones para bloqueo de campos
+//funciones para validación de campos
 const showInputError = (formElement, inputElement, errorMessage) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.add("popup__input_type_error");
