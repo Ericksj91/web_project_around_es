@@ -117,7 +117,7 @@
   margin: 0;
 }
 /* errores */
-.popup__form__input-error {
+.popup__input-error {
   display: none;
   color: #ff0000;
   font-family: "Inter", Arial, sans-serif;
@@ -130,7 +130,7 @@
   border: 1px solid #ff0000;
 }
 
-.popup__form__input-error_active {
+.popup__input-error_active {
   display: block;
 }
 
