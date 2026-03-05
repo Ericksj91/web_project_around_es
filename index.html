@@ -52,15 +52,15 @@
           <form class="popup__form" id="edit-profile-form" novalidate>
             <input
               class="popup__input popup__input_type_name"
-              id="name"
               name="name"
+              id="name"
               placeholder="Nombre"
               type="text"
               required
               minlength="2"
               maxlength="40"
             />
-            <span class="popup__input-error name-error"></span>
+            <span class="popup__input-error" id="name-error"></span>
             <input
               class="popup__input popup__input_type_description"
               id="description"
@@ -71,7 +71,7 @@
               maxlength="200"
               required
             />
-            <span class="popup__input-error description-error"></span>
+            <span class="popup__input-error" id="description-error"></span>
             <button class="button popup__button" type="submit">Guardar</button>
           </form>
         </div>
@@ -87,7 +87,6 @@
           <form class="popup__form" id="new-card-form" novalidate>
             <input
               class="popup__input popup__input_type_card-name"
-              name="place-name"
               id="place_name"
               placeholder="Título"
               minlength="2"
@@ -95,7 +94,7 @@
               type="text"
               required
             />
-            <span class="popup__input-error place_name-error"></span>
+            <span class="popup__input-error" id="place_name-error"></span>
             <input
               class="popup__input popup__input_type_url"
               name="link"
@@ -104,7 +103,7 @@
               type="url"
               required
             />
-            <span class="popup__input-error link-error"></span>
+            <span class="popup__input-error" id="link-error"></span>
             <button class="button popup__button" type="submit">Crear</button>
           </form>
         </div>
