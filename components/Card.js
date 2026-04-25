@@ -1,9 +1,19 @@
 export class Card {
-  constructor(data, CardSelector, ImageClickHandler) {
+  constructor(
+    data,
+    CardSelector,
+    ImageClickHandler,
+    likeHandler,
+    deleteHandler,
+  ) {
     this._name = data.name;
     this._link = data.link;
+    this._isLiked = data.isLiked;
+    this._id = data._id;
     this._CardSelector = CardSelector;
     this._ImageClickHandler = ImageClickHandler;
+    this._likeHandler = likeHandler;
+    this._deleteHandler = deleteHandler;
   }
 
   _getTemplate() {
@@ -14,11 +24,26 @@ export class Card {
     return cardElement;
   }
 
+  updateLike(data) {
+    this._isLiked = data.isLiked;
+    if (this._isLiked) {
+      this._likeBtn.classList.add("card__like-button_is-active");
+    } else {
+      this._likeBtn.classList.remove("card__like-button_is-active");
+    }
+  }
+
   _handleLikeClick() {
-    this._likeBtn.classList.toggle("card__like-button_is-active");
+    this._likeHandler(this._id, this._isLiked, this);
+    //this._likeBtn.classList.toggle("card__like-button_is-active");
   }
 
   _handleDeleteClick() {
+    this._deleteHandler(this._id, this);
+    //this._element.remove();
+  }
+
+  removeCard() {
     this._element.remove();
   }
 
@@ -52,6 +77,10 @@ export class Card {
     this._titleElement.textContent = this._name;
 
     this._setEventListeners();
+
+    if (this._isLiked) {
+      this._likeBtn.classList.add("card__like-button_is-active");
+    }
 
     return this._element;
   }
